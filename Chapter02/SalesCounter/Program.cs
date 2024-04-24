@@ -11,7 +11,7 @@ namespace SalesCounter {
         static void Main(string[] args) {
           
             SalesCounter sales = new SalesCounter(@"data\sales.csv");
-            Dictionary<string, int> amountPerStore = sales.GetPerStoreSales();
+            IDictionary<string, int> amountPerStore = sales.GetPerStoreSales();
             foreach(KeyValuePair<String,int> obj in amountPerStore) {
                 Console.WriteLine("{0} {1}", obj.Key, obj.Value);
             }
