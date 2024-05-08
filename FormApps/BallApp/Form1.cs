@@ -25,7 +25,7 @@ namespace BallApp {
              pb = new PictureBox();   //画像を表示するコントロール
             pb.Size = new Size(50, 50);
 
-;           soccerBall = new SoccerBall(0, 0);
+;           soccerBall = new SoccerBall(e.X,e.Y);
 
             pb.Image = soccerBall.Image;
             pb.Location = new Point((int)soccerBall.PosX, (int)soccerBall.PosY);
