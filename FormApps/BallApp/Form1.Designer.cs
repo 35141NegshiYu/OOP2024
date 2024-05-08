@@ -23,34 +23,29 @@
         ///  the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            button1 = new Button();
+            components = new System.ComponentModel.Container();
+            timer1 = new System.Windows.Forms.Timer(components);
             SuspendLayout();
             // 
-            // button1
+            // timer1
             // 
-            button1.Location = new Point(0, 0);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 0;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
+            timer1.Interval = 10;
+            timer1.Tick += timer1_Tick;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.Lime;
-            ClientSize = new Size(800, 450);
-            Controls.Add(button1);
-            HelpButton = true;
+            BackColor = Color.Green;
+            ClientSize = new Size(784, 561);
             Name = "Form1";
             Text = "BallApp";
             Load += Form1_Load;
+            MouseClick += Form1_MouseClick;
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Button button1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
