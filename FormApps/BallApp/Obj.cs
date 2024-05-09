@@ -22,8 +22,7 @@ namespace BallApp {
             Image = Image.FromFile(path);            
         }
        
-
-
+        
 
 
 
