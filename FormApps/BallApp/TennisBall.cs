@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace BallApp {
     internal class TennisBall : Obj {
+        public static int count {  get; set; }
 
         public TennisBall(double xp, double yp)
             : base(xp, yp, @"Picture\tennis_ball.png") {
 
             MoveX = 10; //移動量設定
             MoveY = 10;
+
+            count++;
         }
 
         public override bool Move() {

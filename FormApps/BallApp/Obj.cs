@@ -11,6 +11,8 @@ namespace BallApp {
         public double PosY { get; set; }
         public double MoveX { get; set; }
         public double MoveY { get; set; }
+        
+
 
         //コンストラクタ
         public Obj(double posX, double posY, string path)
@@ -19,6 +21,12 @@ namespace BallApp {
             PosY = posY;
             Image = Image.FromFile(path);            
         }
+       
+
+
+
+
+
 
         //移動メソッド（抽象メソッド）
         public abstract bool Move();

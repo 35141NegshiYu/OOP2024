@@ -15,7 +15,7 @@ namespace BallApp {
 
         //フォームが最初にロードされるとき一度だけ実行される
         private void Form1_Load(object sender, EventArgs e) {
-
+            
         }
 
         private void timer1_Tick(object sender, EventArgs e) {
@@ -42,6 +42,7 @@ namespace BallApp {
                 pb.Location = new Point((int)ball.PosX, (int)ball.PosY);
                 pb.SizeMode = PictureBoxSizeMode.StretchImage;
                 pb.Parent = this;
+                
 
 
 
@@ -58,8 +59,8 @@ namespace BallApp {
 
                 balls.Add(ball);
             pbs.Add(pb);
+            this.Text = "BallApp SoccerBall:" + SoccerBall.count + "TennisBall:" + TennisBall.count;
 
-            
 
 
 
