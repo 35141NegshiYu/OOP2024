@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace BallApp {
-    internal class SoccerBall :Obj{
-        public static int count {  get; set; }
+    internal class SoccerBall : Obj {
+        public static int count { get; set; }
         public SoccerBall(double xp, double yp)
             : base(xp, yp, @"Picture\soccer_ball.png") {
 
@@ -32,7 +33,10 @@ namespace BallApp {
             PosX += MoveX;
             PosY += MoveY;
             return true;
-           
+
+        }
+        public override bool Move(Keys direction) {
+            return true;
         }
     }
 }

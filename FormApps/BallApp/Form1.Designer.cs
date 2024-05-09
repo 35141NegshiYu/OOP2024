@@ -41,6 +41,7 @@
             Name = "Form1";
             Text = "BallApp";
             Load += Form1_Load;
+            KeyDown += Form1_KeyDown;
             MouseClick += Form1_MouseClick;
             ResumeLayout(false);
         }
