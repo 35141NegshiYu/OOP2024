@@ -39,7 +39,7 @@ namespace BallApp {
         private void timer1_Tick(object sender, EventArgs e) {
 
             for (int i = 0; i < balls.Count; i++) {
-                balls[i].Move(pbBar, pbs[i]);
+                balls[i].Move(pdBar, pbs[i]);
                 pbs[i].Location = new Point((int)balls[i].PosX, (int)balls[i].PosY);
 
             }
