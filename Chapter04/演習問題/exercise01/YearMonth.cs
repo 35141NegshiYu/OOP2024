@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,14 +27,15 @@ namespace exercise01 {
         }
         //4.1.3
         public YearMonth AddOneMonth() {
-            int newYear = Year;
-            int newMonth = Month + 1;
-            if (newMonth > 12) {
-                newYear++;
-                newMonth = 1;
+            if (Month > 12) {
+                return new YearMonth(Year + 1, 1);
+            }
+            else
+            {
+                return new YearMonth(Year, Month + 1);
+                
             }
 
-            return new YearMonth(newYear, newMonth);
         }
 
         public override string ToString() {
