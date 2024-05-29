@@ -20,7 +20,6 @@ namespace BallApp {
             Count++;
         }
 
-        //戻り値：０…移動OK、1…落下した、２…バーに当たった
         public override bool Move(PictureBox pbBar, PictureBox pbBall) {
             Rectangle rBar = new Rectangle(pbBar.Location.X, pbBar.Location.Y,
                                                          pbBar.Width, pbBar.Height);
@@ -37,16 +36,14 @@ namespace BallApp {
                 MoveY = -MoveY;
             }
 
+            //下に落下したか？
+            if (PosY > 500)
+                return false;
+
             PosX += MoveX;
             PosY += MoveY;
 
-
-            //下に落下したか？
-            if (PosY > 500)
-                return 1;
-
-            if (rBar.IntersectsWith(rBall))
-                return 2;
+            return true;
         }
 
         public override bool Move(Keys direction) {
