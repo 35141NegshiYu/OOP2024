@@ -8,7 +8,8 @@ namespace Exercise03 {
     internal class Program {
         static void Main(string[] args) {
             var text = "Jackdaws love my big sphinx of quartz";
-            
+            var text2 = "Jackdaws love my big sphinx of quartz";
+
 
             Exercise3_1(text);
             Console.WriteLine("-----");
@@ -23,33 +24,36 @@ namespace Exercise03 {
             Console.WriteLine("-----");
 
             Exercise3_5(text);
+            Console.WriteLine("-----");
+
+            Exercise3_6(text);
         }
 
         private static void Exercise3_1(string text) {
-        int count = 0;
-            foreach(char c in text) {
-                if(c == ' ') {
+            int count = 0;
+            foreach (char c in text) {
+                if (c == ' ') {
                     count++;
                 }
             }
-            Console.WriteLine("空白数:"+count);
+            Console.WriteLine("空白数:" + count);
         }
 
         private static void Exercise3_2(string text) {
-            text = text.Replace("big" ,"small");
+            text = text.Replace("big", "small");
             Console.WriteLine("置き換え後の文字列:" + text);
         }
 
         private static void Exercise3_3(string text) {
             var s = text.Split().Length;
-            
+
             Console.WriteLine("単語数:" + s);
         }
-    
+
 
         private static void Exercise3_4(string text) {
-            var words = text.Split(' ').Where(s=>s.Length > 4);
-            foreach(var word in words) {
+            var words = text.Split(' ').Where(s => s.Length > 4);
+            foreach (var word in words) {
                 Console.WriteLine(word);
             }
         }
@@ -62,6 +66,15 @@ namespace Exercise03 {
                 stringBuilder.Append(" "); // 単語の後に空白を追加
             }
             Console.WriteLine(stringBuilder.ToString());
+        }
+
+
+        private static void Exercise3_6(string text) {
+            var array = text.Split(new[] {' ',',','-','_' }).ToArray();
+            foreach(var word in array) {
+                Console.WriteLine(word);
+            }
+
         }
     }
 }
