@@ -25,19 +25,29 @@ namespace Exercise03 {
         }
 
         private static void Exercise3_1(string text) {
-            throw new NotImplementedException();
+        int count = 0;
+            foreach(char c in text) {
+                if(c == ' ') {
+                    count++;
+                }
+            }
+            Console.WriteLine("空白数:"+count);
         }
 
         private static void Exercise3_2(string text) {
-            throw new NotImplementedException();
+            text = text.Replace("big" ,"small");
+            Console.WriteLine("置き換え後の文字列:" + text);
         }
 
         private static void Exercise3_3(string text) {
-            throw new NotImplementedException();
+            var s = text.Split().Length;
+            
+            Console.WriteLine("単語数:" + s);
         }
+    
 
         private static void Exercise3_4(string text) {
-            throw new NotImplementedException();
+            
         }
 
         private static void Exercise3_5(string text) {
