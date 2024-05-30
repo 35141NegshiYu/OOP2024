@@ -8,6 +8,7 @@ namespace Exercise03 {
     internal class Program {
         static void Main(string[] args) {
             var text = "Jackdaws love my big sphinx of quartz";
+            
 
             Exercise3_1(text);
             Console.WriteLine("-----");
@@ -54,7 +55,13 @@ namespace Exercise03 {
         }
 
         private static void Exercise3_5(string text) {
-            throw new NotImplementedException();
+            string[] words = text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (string word in words) {
+                stringBuilder.Append(word);
+                stringBuilder.Append(" "); // 単語の後に空白を追加
+            }
+            Console.WriteLine(stringBuilder.ToString());
         }
     }
 }
