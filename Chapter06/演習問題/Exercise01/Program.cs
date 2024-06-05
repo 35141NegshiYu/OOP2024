@@ -30,23 +30,37 @@ namespace Exercise01 {
         }
 
         private static void Exercise1_2(int[] numbers) {
-            var lastTwoElements = numbers.Skip(Math.Max(0, numbers.Count() - 2));
-
+            /*var lastTwoElements = numbers.Skip(Math.Max(0, numbers.Count() - 2));
             // 結果を出力
             foreach (var number in lastTwoElements) {
                 Console.WriteLine("最後から二つの要素: " + number);
+            }*/
+            var skip = numbers.Length - 2;
+
+            foreach (var number in numbers.Skip(skip)) {
+                Console.WriteLine(number);
             }
         }
 
         private static void Exercise1_3(int[] numbers) {
-            var num = numbers.ToString();
-            Console.WriteLine(num);
+            var strings = numbers.Select(n => n.ToString());
+            foreach(var numString in strings) {
+                Console.WriteLine(numString);
+            }
+            
         }
 
         private static void Exercise1_4(int[] numbers) {
+            foreach(var number in numbers.OrderBy(n => n).Take(3)) {
+                Console.WriteLine(number);
+            }
+        
         }
 
         private static void Exercise1_5(int[] numbers) {
+            var count = numbers.Distinct().Count(n => n > 10);
+            Console.WriteLine(count);
+        
         }
     }
 }
