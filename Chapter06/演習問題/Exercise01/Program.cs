@@ -30,7 +30,12 @@ namespace Exercise01 {
         }
 
         private static void Exercise1_2(int[] numbers) {
-            Console.WriteLine(numbers.Reverse().Skip(1).First());
+            var lastTwoElements = numbers.Skip(Math.Max(0, numbers.Count() - 2));
+
+            // 結果を出力
+            foreach (var number in lastTwoElements) {
+                Console.WriteLine("最後から二つの要素: " + number);
+            }
         }
 
         private static void Exercise1_3(int[] numbers) {
