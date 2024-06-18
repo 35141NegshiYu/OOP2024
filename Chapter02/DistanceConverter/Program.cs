@@ -29,13 +29,6 @@ namespace DistanceConverter {
                 Console.WriteLine("{0} m = {1:0.0000} ft", meter, feet);
             }
         }
-        //フィートからメートルを求める
-        static double FeetToMeter(int feet) {
-            return feet * 0.3048;
-        }
-        //メートルからフィートを求める
-        static double MeterToFeet(int meter) {
-            return meter / 0.3048;
-        }
+
     }
 }

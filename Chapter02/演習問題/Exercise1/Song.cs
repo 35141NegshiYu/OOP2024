@@ -5,20 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Exercise1 {
+    // 2.1.1
     internal class Song {
-        //歌のタイトル
-        public String title {  get; set; }
-        //アーティスト名
-        public String ArtistName { get; set; }
-        //演奏時間、単位は秒
+        public string Title { get; set; }
+        public string ArtistName { get; set; }
         public int Length { get; set; }
 
-        //コンストラクタ
-        public Song(String title, String ArtistName, int Length) {
-            this.title = title;
-            this.ArtistName = ArtistName;
-            this.Length = Length;
+        // 2.1.2
+        public Song(string title, string artistname, int length) {
+            Title = title;
+            ArtistName = artistname;
+            Length = length;
         }
-
     }
 }

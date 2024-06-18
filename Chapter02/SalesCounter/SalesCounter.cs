@@ -10,17 +10,16 @@ namespace SalesCounter {
         private IEnumerable<Sale> _sales;
 
         //コンストラクタ
-        public SalesCounter(String filePass) {
+        public SalesCounter(string filePass) {
             _sales = ReadSales(filePass);
-
         }
 
-        //売上データを読み込み、Saleオブジェクトのリストを返す
-        private static IEnumerable<Sale> ReadSales(String filePath) {
+        //売り上げデータを読み込み、Saleオブジェクトのリストを返す
+        private static IEnumerable<Sale> ReadSales(string filePath) {
             List<Sale> sales = new List<Sale>();
             string[] lines = File.ReadAllLines(filePath);
-            foreach (String line in lines) {
-                String[] items = line.Split(',');
+            foreach (var line in lines) {
+                string[] items = line.Split(',');
                 Sale sale = new Sale {
                     ShopName = items[0],
                     ProductCategory = items[1],
@@ -31,11 +30,10 @@ namespace SalesCounter {
             return sales;
         }
 
-        //店舗別売上を求める
+        //店舗別の売り上げを求める
         public IDictionary<string, int> GetPerStoreSales() {
-
-           var dict = new Dictionary<string, int>();
-            foreach (Sale sale in _sales) {
+            var dict = new Dictionary<string, int>();
+            foreach (var sale in _sales) {
                 if (dict.ContainsKey(sale.ShopName)) {
                     dict[sale.ShopName] += sale.Amount;
                 } else {
