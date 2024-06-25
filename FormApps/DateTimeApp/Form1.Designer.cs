@@ -26,14 +26,14 @@ namespace DateTimeApp {
         /// </summary>
         private void InitializeComponent() {
             this.label1 = new System.Windows.Forms.Label();
-            this.dtpBirthday = new System.Windows.Forms.DateTimePicker();
+            this.dtpDate = new System.Windows.Forms.DateTimePicker();
             this.btDateCount = new System.Windows.Forms.Button();
-            this.tbDisp = new System.Windows.Forms.TextBox();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.tdDisp = new System.Windows.Forms.TextBox();
+            this.nudDay = new System.Windows.Forms.NumericUpDown();
             this.btDayBefore = new System.Windows.Forms.Button();
             this.btDayAfter = new System.Windows.Forms.Button();
             this.btAge = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDay)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -46,19 +46,19 @@ namespace DateTimeApp {
             this.label1.TabIndex = 0;
             this.label1.Text = "日付";
             // 
-            // dtpBirthday
+            // dtpDate
             // 
-            this.dtpBirthday.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.dtpBirthday.Location = new System.Drawing.Point(261, 98);
-            this.dtpBirthday.Name = "dtpBirthday";
-            this.dtpBirthday.Size = new System.Drawing.Size(212, 31);
-            this.dtpBirthday.TabIndex = 1;
-            this.dtpBirthday.ValueChanged += new System.EventHandler(this.dtpBirthday_ValueChanged);
+            this.dtpDate.Font = new System.Drawing.Font("MS UI Gothic", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.dtpDate.Location = new System.Drawing.Point(213, 93);
+            this.dtpDate.Name = "dtpDate";
+            this.dtpDate.Size = new System.Drawing.Size(212, 31);
+            this.dtpDate.TabIndex = 1;
+            this.dtpDate.ValueChanged += new System.EventHandler(this.dtpBirthday_ValueChanged);
             // 
             // btDateCount
             // 
             this.btDateCount.Font = new System.Drawing.Font("MS UI Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.btDateCount.Location = new System.Drawing.Point(341, 135);
+            this.btDateCount.Location = new System.Drawing.Point(465, 83);
             this.btDateCount.Name = "btDateCount";
             this.btDateCount.Size = new System.Drawing.Size(159, 58);
             this.btDateCount.TabIndex = 2;
@@ -66,26 +66,26 @@ namespace DateTimeApp {
             this.btDateCount.UseVisualStyleBackColor = true;
             this.btDateCount.Click += new System.EventHandler(this.btDateCount_Click);
             // 
-            // tbDisp
+            // tdDisp
             // 
-            this.tbDisp.Font = new System.Drawing.Font("MS UI Gothic", 30F);
-            this.tbDisp.Location = new System.Drawing.Point(115, 347);
-            this.tbDisp.Name = "tbDisp";
-            this.tbDisp.Size = new System.Drawing.Size(509, 47);
-            this.tbDisp.TabIndex = 3;
+            this.tdDisp.Font = new System.Drawing.Font("MS UI Gothic", 30F);
+            this.tdDisp.Location = new System.Drawing.Point(115, 347);
+            this.tdDisp.Name = "tdDisp";
+            this.tdDisp.Size = new System.Drawing.Size(509, 47);
+            this.tdDisp.TabIndex = 3;
             // 
-            // numericUpDown2
+            // nudDay
             // 
-            this.numericUpDown2.Font = new System.Drawing.Font("MS UI Gothic", 22F);
-            this.numericUpDown2.Location = new System.Drawing.Point(140, 176);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
+            this.nudDay.Font = new System.Drawing.Font("MS UI Gothic", 22F);
+            this.nudDay.Location = new System.Drawing.Point(140, 176);
+            this.nudDay.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(181, 37);
-            this.numericUpDown2.TabIndex = 5;
+            this.nudDay.Name = "nudDay";
+            this.nudDay.Size = new System.Drawing.Size(181, 37);
+            this.nudDay.TabIndex = 5;
             // 
             // btDayBefore
             // 
@@ -107,6 +107,7 @@ namespace DateTimeApp {
             this.btDayAfter.TabIndex = 6;
             this.btDayAfter.Text = "日後";
             this.btDayAfter.UseVisualStyleBackColor = true;
+            this.btDayAfter.Click += new System.EventHandler(this.btDayAfter_Click);
             // 
             // btAge
             // 
@@ -117,7 +118,7 @@ namespace DateTimeApp {
             this.btAge.TabIndex = 7;
             this.btAge.Text = "年齢";
             this.btAge.UseVisualStyleBackColor = true;
-            this.btAge.Click += new System.EventHandler(this.button1_Click);
+            this.btAge.Click += new System.EventHandler(this.btAge_Click);
             // 
             // Form1
             // 
@@ -127,14 +128,14 @@ namespace DateTimeApp {
             this.Controls.Add(this.btAge);
             this.Controls.Add(this.btDayAfter);
             this.Controls.Add(this.btDayBefore);
-            this.Controls.Add(this.numericUpDown2);
-            this.Controls.Add(this.tbDisp);
+            this.Controls.Add(this.nudDay);
+            this.Controls.Add(this.tdDisp);
             this.Controls.Add(this.btDateCount);
-            this.Controls.Add(this.dtpBirthday);
+            this.Controls.Add(this.dtpDate);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudDay)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -147,10 +148,10 @@ namespace DateTimeApp {
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker dtpBirthday;
+        private System.Windows.Forms.DateTimePicker dtpDate;
         private System.Windows.Forms.Button btDateCount;
-        private System.Windows.Forms.TextBox tbDisp;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.TextBox tdDisp;
+        private System.Windows.Forms.NumericUpDown nudDay;
         private System.Windows.Forms.Button btDayBefore;
         private System.Windows.Forms.Button btDayAfter;
         private System.Windows.Forms.Button btAge;
