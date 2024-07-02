@@ -83,8 +83,7 @@ namespace Test02 {
         //問題３　奇数のみを降順に並べて表示（遅延実行とする）
         //　　　　出力結果【91 87 53 35 31 17】
         private static void Exercise03(List<int> numbers) {
-            var Kisuu = numbers
-            .Where(n => n % 2 != 0).OrderByDescending(n => n);  
+            var Kisuu = numbers.Where(n => n % 2 != 0).OrderByDescending(n => n);  
             foreach (var number in Kisuu) {
                 Console.Write(number + " ");
             }
