@@ -51,9 +51,14 @@
             btReportOpen = new Button();
             btReportSave = new Button();
             ofdPicFileOpen = new OpenFileDialog();
+            ssMessageArea = new StatusStrip();
+            tslbMessage = new ToolStripStatusLabel();
+            ofdReportFileOpen = new OpenFileDialog();
+            sfdReportFileSave = new SaveFileDialog();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbPicture).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvCarReport).BeginInit();
+            ssMessageArea.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -113,6 +118,7 @@
             cbAuthor.Name = "cbAuthor";
             cbAuthor.Size = new Size(314, 33);
             cbAuthor.TabIndex = 2;
+            cbAuthor.TextChanged += cbAuthor_TextChanged;
             // 
             // label5
             // 
@@ -132,6 +138,7 @@
             cbCarName.Name = "cbCarName";
             cbCarName.Size = new Size(183, 33);
             cbCarName.TabIndex = 2;
+            cbCarName.TextChanged += cbCarName_TextChanged;
             // 
             // groupBox1
             // 
@@ -150,6 +157,7 @@
             // rbOther
             // 
             rbOther.AutoSize = true;
+            rbOther.Checked = true;
             rbOther.Location = new Point(319, 11);
             rbOther.Name = "rbOther";
             rbOther.Size = new Size(56, 19);
@@ -165,7 +173,6 @@
             rbInport.Name = "rbInport";
             rbInport.Size = new Size(61, 19);
             rbInport.TabIndex = 0;
-            rbInport.TabStop = true;
             rbInport.Text = "輸入車";
             rbInport.UseVisualStyleBackColor = true;
             // 
@@ -176,7 +183,6 @@
             rbSubaru.Name = "rbSubaru";
             rbSubaru.Size = new Size(54, 19);
             rbSubaru.TabIndex = 0;
-            rbSubaru.TabStop = true;
             rbSubaru.Text = "スバル";
             rbSubaru.UseVisualStyleBackColor = true;
             // 
@@ -187,7 +193,6 @@
             rbHonda.Name = "rbHonda";
             rbHonda.Size = new Size(53, 19);
             rbHonda.TabIndex = 0;
-            rbHonda.TabStop = true;
             rbHonda.Text = "ホンダ";
             rbHonda.UseVisualStyleBackColor = true;
             // 
@@ -198,7 +203,6 @@
             rbNissan.Name = "rbNissan";
             rbNissan.Size = new Size(49, 19);
             rbNissan.TabIndex = 0;
-            rbNissan.TabStop = true;
             rbNissan.Text = "日産";
             rbNissan.UseVisualStyleBackColor = true;
             // 
@@ -209,7 +213,6 @@
             rbToyota.Name = "rbToyota";
             rbToyota.Size = new Size(50, 19);
             rbToyota.TabIndex = 0;
-            rbToyota.TabStop = true;
             rbToyota.Text = "トヨタ";
             rbToyota.UseVisualStyleBackColor = true;
             // 
@@ -237,7 +240,7 @@
             pbPicture.Location = new Point(511, 49);
             pbPicture.Name = "pbPicture";
             pbPicture.Size = new Size(277, 245);
-            pbPicture.SizeMode = PictureBoxSizeMode.AutoSize;
+            pbPicture.SizeMode = PictureBoxSizeMode.StretchImage;
             pbPicture.TabIndex = 6;
             pbPicture.TabStop = false;
             // 
@@ -338,16 +341,38 @@
             btReportSave.TabIndex = 7;
             btReportSave.Text = "保存";
             btReportSave.UseVisualStyleBackColor = true;
+            btReportSave.Click += btReportSave_Click;
             // 
             // ofdPicFileOpen
             // 
             ofdPicFileOpen.FileName = "openFileDialog1";
+            // 
+            // ssMessageArea
+            // 
+            ssMessageArea.Items.AddRange(new ToolStripItem[] { tslbMessage });
+            ssMessageArea.Location = new Point(0, 541);
+            ssMessageArea.Name = "ssMessageArea";
+            ssMessageArea.Size = new Size(800, 22);
+            ssMessageArea.TabIndex = 9;
+            ssMessageArea.Text = "statusStrip1";
+            ssMessageArea.ItemClicked += tslbMessage_ItemClicked;
+            // 
+            // tslbMessage
+            // 
+            tslbMessage.Name = "tslbMessage";
+            tslbMessage.Size = new Size(118, 17);
+            tslbMessage.Text = "toolStripStatusLabel1";
+            // 
+            // ofdReportFileOpen
+            // 
+            ofdReportFileOpen.FileName = "openFileDialog1";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 563);
+            Controls.Add(ssMessageArea);
             Controls.Add(dgvCarReport);
             Controls.Add(btPicDelete);
             Controls.Add(btDeleteReport);
@@ -370,12 +395,14 @@
             Controls.Add(label6);
             Controls.Add(label1);
             Name = "Form1";
-            Text = "Form1";
+            Text = "試乗レポートシステム";
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pbPicture).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvCarReport).EndInit();
+            ssMessageArea.ResumeLayout(false);
+            ssMessageArea.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -410,5 +437,9 @@
         private Button btReportOpen;
         private Button btReportSave;
         private OpenFileDialog ofdPicFileOpen;
+        private StatusStrip ssMessageArea;
+        private ToolStripStatusLabel tslbMessage;
+        private OpenFileDialog ofdReportFileOpen;
+        private SaveFileDialog sfdReportFileSave;
     }
 }
