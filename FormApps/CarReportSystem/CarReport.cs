@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace CarReportSystem {
     [Serializable]
     public class CarReport {
+        //列挙型
         public enum MakerGroup {
             なし,
             トヨタ,
@@ -18,19 +19,16 @@ namespace CarReportSystem {
         }
 
         [System.ComponentModel.DisplayName("日付")]
-        public DateTime Date { get; set; } //日付
+        public DateTime Date { get; set; }  //日付
         [System.ComponentModel.DisplayName("記録者")]
-        public string Author { get; set; } = string.Empty; //記録者
+        public string Author { get; set; } = string.Empty;  //記録者
         [System.ComponentModel.DisplayName("メーカー")]
-        public MakerGroup Maker { get; set; }  //メーカー
+        public MakerGroup Maker { get; set; }   //メーカー
         [System.ComponentModel.DisplayName("車名")]
         public string CarName { get; set; } = string.Empty; //車名
-        [System.ComponentModel.DisplayName("レポート")]
-        public string Report { get; set; } = string.Empty;   //レポート
+        [System.ComponentModel.DisplayName("レポート")] 
+        public string Report { get; set; } = string.Empty; //レポート
+        //[System.ComponentModel.Browsable(false)]
         public Image? Picture { get; set; }  //画像
-    }   
-
-
-
-
+    }
 }
