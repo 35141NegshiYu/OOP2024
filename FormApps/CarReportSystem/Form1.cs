@@ -1,7 +1,13 @@
+using Microsoft.Win32;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Diagnostics.Metrics;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CarReportSystem {
@@ -9,6 +15,9 @@ namespace CarReportSystem {
 
         //カーレポート管理用リスト
         BindingList<CarReport> listCarReports = new BindingList<CarReport>();
+
+        //設定クラスのインスタンス作成
+        Settings settings = new Settings();
 
         //コンストラクタ
         public Form1() {
@@ -135,9 +144,30 @@ namespace CarReportSystem {
             //交互に色を設定（データグリッドビュー）
             dgvCarReport.RowsDefaultCellStyle.BackColor = Color.AliceBlue;
             dgvCarReport.AlternatingRowsDefaultCellStyle.BackColor = Color.WhiteSmoke;
+
+           
+            if (File.Exists("settings.xml")) {
+                //設定ファイルを逆シリアル化して背景を設定
+                try {
+                    // 設定ファイルの逆シリアル化
+                    using (var reader = XmlReader.Create("setting.xml")) {
+                        var serializer = new XmlSerializer(typeof(Settings));
+                        var settings = serializer.Deserialize(reader) as Settings;
+                        BackColor = Color.FromArgb(settings.MainFormColor);
+                        settings.MainFormColor = BackColor.ToArgb();
+                    }
+                }
+                catch (Exception ex) {
+                    tslbMessage.Text = "色情報ファイルエラー";
+                }
+            }
+            else {
+                tslbMessage.Text = "色情報ファイルがありません";
+
+            }
         }
 
-        private void dgvCarReport_Click(object sender, EventArgs e) {
+            private void dgvCarReport_Click(object sender, EventArgs e) {
             if ((dgvCarReport.Rows.Count == 0)
                 || (!dgvCarReport.CurrentRow.Selected)) return;
 
@@ -268,6 +298,29 @@ namespace CarReportSystem {
 
         private void dgvCarReport_CellContentClick(object sender, DataGridViewCellEventArgs e) {
 
+        }
+
+        //ファイル設定
+        private void 色設定ToolStripMenuItem_Click(object sender, EventArgs e) {
+            //色設定
+            if (cdColor.ShowDialog() == DialogResult.OK) {
+                BackColor = cdColor.Color;  //背景色設定
+                settings.MainFormColor = cdColor.Color.ToArgb();    //背景色保存
+            }
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
+            //設定ファイルのシリアル化
+            try {
+                var serializer = new XmlSerializer(typeof(Settings));
+                using (var writer = XmlWriter.Create("settings.xml")) {
+                    
+                    serializer.Serialize(writer, settings);
+                }
+            }
+            catch (Exception) {
+                MessageBox.Show("設定ファイル読み込みエラー");
+            }
         }
     }
 }
