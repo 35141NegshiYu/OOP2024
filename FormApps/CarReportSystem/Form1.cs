@@ -10,6 +10,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
+
 namespace CarReportSystem {
     public partial class Form1 : Form {
 
@@ -145,7 +146,7 @@ namespace CarReportSystem {
             dgvCarReport.RowsDefaultCellStyle.BackColor = Color.AliceBlue;
             dgvCarReport.AlternatingRowsDefaultCellStyle.BackColor = Color.WhiteSmoke;
 
-           
+
             if (File.Exists("settings.xml")) {
                 //設定ファイルを逆シリアル化して背景を設定
                 try {
@@ -160,14 +161,13 @@ namespace CarReportSystem {
                 catch (Exception ex) {
                     tslbMessage.Text = "色情報ファイルエラー";
                 }
-            }
-            else {
+            } else {
                 tslbMessage.Text = "色情報ファイルがありません";
 
             }
         }
 
-            private void dgvCarReport_Click(object sender, EventArgs e) {
+        private void dgvCarReport_Click(object sender, EventArgs e) {
             if ((dgvCarReport.Rows.Count == 0)
                 || (!dgvCarReport.CurrentRow.Selected)) return;
 
@@ -314,13 +314,18 @@ namespace CarReportSystem {
             try {
                 var serializer = new XmlSerializer(typeof(Settings));
                 using (var writer = XmlWriter.Create("settings.xml")) {
-                    
+
                     serializer.Serialize(writer, settings);
                 }
             }
             catch (Exception) {
                 MessageBox.Show("設定ファイル読み込みエラー");
             }
+        }
+
+        private void このアプリについてToolStripMenuItem_Click(object sender, EventArgs e) {
+            var fmvarsion = new fmVersion();
+            fmvarsion.ShowDialog();
         }
     }
 }
