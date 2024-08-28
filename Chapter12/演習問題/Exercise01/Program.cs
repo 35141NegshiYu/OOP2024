@@ -89,17 +89,18 @@ namespace Exercise01 {
 
         private static void Exercise1_3(string file) {
             //逆シリアル化
-            using(XmlReader reader = XmlReader.Create("Employee.xml")) {
+            using(XmlReader reader = XmlReader.Create(file)) {
                 var serializer = new DataContractSerializer(typeof(Employee[]));
                 var emps = serializer.ReadObject(reader)as Employee[];
                 foreach(var emp in emps) {
-                    Console.WriteLine(emp);
+                    Console.WriteLine("[Id = {0}, Name = {1}, HireData = {2}]",
+                        emp.Id,emp.Name,emp.HireDate);
                 }
             }
         }
 
         private static void Exercise1_4(string file) {
-        
+            
         }
     }
 }
