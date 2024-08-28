@@ -4,6 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
@@ -100,7 +103,24 @@ namespace Exercise01 {
         }
 
         private static void Exercise1_4(string file) {
-            
+            /* Employee[] employees;
+             using (FileStream xmlStream = new FileStream("Employee.xml", FileMode.Open)) {
+                 using (XmlReader xmlReader = XmlReader.Create(xmlStream)) {
+                     employees = (Employee[])new DataContractSerializer(typeof(Employee[])).ReadObject(xmlReader);
+
+                     Console.WriteLine($"{employees}");
+                 }
+             }*/
+
+            using (var stream = new FileStream(file,FileMode.Create,FileAccess.Write)) {
+
+                var options = new JsonSerializerOptions {
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+                    WriteIndented = true,
+                };
+
+                JsonSerializer.Serialize(stream,options );
+            }
         }
     }
 }
