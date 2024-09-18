@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace RssReader {
     
@@ -43,23 +44,20 @@ namespace RssReader {
 
         private void btGet_Click(string url) {
             using (var wc = new WebClient()) {
-                try {
-                    var rssFeedStream = wc.OpenRead(url);
-                    var xdoc = XDocument.Load(rssFeedStream);
-                    items = xdoc.Root.Descendants("item")
-                                      .Select(item => new ItemData {
-                                          Title = (string)item.Element("title"),
-                                          Link = (string)item.Element("link")
-                                      }).ToList();
 
-                    lbRssTitle.Items.Clear();
-                    foreach (var item in items) {
-                        lbRssTitle.Items.Add(item.Title);
-                    }
+                var rssFeedStream = wc.OpenRead(url);
+                var xdoc = XDocument.Load(rssFeedStream);
+                items = xdoc.Root.Descendants("item")
+                                  .Select(item => new ItemData {
+                                      Title = (string)item.Element("title"),
+                                      Link = (string)item.Element("link")
+                                  }).ToList();
+
+                lbRssTitle.Items.Clear();
+                foreach (var item in items) {
+                    lbRssTitle.Items.Add(item.Title);
                 }
-                catch (Exception ex) {
-                    MessageBox.Show($"RSS フィードの読み込み中にエラーが発生しました: {ex.Message}");
-                }
+
             }
         }
 
@@ -77,9 +75,7 @@ namespace RssReader {
             }
         }
 
-        private void webView21_Click(object sender, EventArgs e) {
-
-        }
+        
 
        
         private void AddRssUrl(string displayName, string url) {
@@ -88,18 +84,24 @@ namespace RssReader {
             urlMapping[displayName] = url;
         }
         private void Form1_Load(object sender, EventArgs e) {
-            
+            cbRssUrl.DropDownStyle = ComboBoxStyle.DropDown; // URLの入力を許可
         }
 
 
         private void cbRssUrl_SelectedIndexChanged(object sender, EventArgs e) {
-            if (cbRssUrl.SelectedItem != null) {
-                var selectedDisplayName = cbRssUrl.SelectedItem.ToString();
-                if (urlMapping.TryGetValue(selectedDisplayName, out var url)) {
+            var selectedItem = cbRssUrl.SelectedItem?.ToString();
+            if (!string.IsNullOrEmpty(selectedItem)) {
+                // URLが選択または入力されている場合にRSSフィードを取得する
+                if (urlMapping.ContainsKey(selectedItem)) {
+                    var url = urlMapping[selectedItem];
                     MessageBox.Show($"選択されたURL: {url}"); // 確認用メッセージ
                     btGet_Click(url);
+                } else if (Uri.IsWellFormedUriString(selectedItem, UriKind.Absolute)) {
+                    // 入力がURLとして有効な場合にRSSフィードを取得する
+                    MessageBox.Show($"入力されたURL: {selectedItem}");
+                    btGet_Click(selectedItem);
                 } else {
-                    MessageBox.Show($"URLが見つかりません: {selectedDisplayName}");
+                    MessageBox.Show($"URLが無効です: {selectedItem}");
                 }
             }
         }
@@ -119,7 +121,7 @@ namespace RssReader {
             }
 
             // 登録処理
-            urlMapping.Add(displayName, currentUrl);
+            urlMapping[displayName] =  currentUrl;
 
             // コンボボックスに表示名を追加
             cbRssUrl.Items.Add(displayName);

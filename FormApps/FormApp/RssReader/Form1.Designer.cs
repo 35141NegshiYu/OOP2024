@@ -1,4 +1,6 @@
-﻿namespace RssReader {
+﻿using System;
+
+namespace RssReader {
     partial class Form1 {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -153,6 +155,8 @@
             this.PerformLayout();
 
         }
+
+        
 
         #endregion
         private System.Windows.Forms.Button btGet;
