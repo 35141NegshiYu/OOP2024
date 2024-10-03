@@ -123,7 +123,7 @@ namespace Exercise01 {
                 .Where(x => x.BookCount >= 4);
 
             foreach (var group in query) {
-                Console.WriteLine(group.CategoryName +"(" + group.BookCount+ "冊）");
+                Console.WriteLine(group.CategoryName +"(" + group.BookCount+ "冊）") ;
             }
         }
 
