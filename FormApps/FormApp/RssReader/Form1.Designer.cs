@@ -108,16 +108,6 @@ namespace RssReader {
             // cbRssUrl
             // 
             this.cbRssUrl.FormattingEnabled = true;
-            this.cbRssUrl.Items.AddRange(new object[] {
-            "主要",
-            "国内",
-            "国際",
-            "経済",
-            "エンタメ",
-            "スポーツ",
-            "IT",
-            "科学",
-            "地域"});
             this.cbRssUrl.Location = new System.Drawing.Point(202, 34);
             this.cbRssUrl.Name = "cbRssUrl";
             this.cbRssUrl.Size = new System.Drawing.Size(439, 20);
@@ -157,6 +147,8 @@ namespace RssReader {
         }
 
         
+
+
 
         #endregion
         private System.Windows.Forms.Button btGet;
