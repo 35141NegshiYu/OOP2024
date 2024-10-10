@@ -45,6 +45,7 @@ namespace RssReader {
             this.btGet.TabIndex = 1;
             this.btGet.Text = "取得";
             this.btGet.UseVisualStyleBackColor = true;
+            this.btGet.Click += new System.EventHandler(this.btGet_Click);
             // 
             // lbRssTitle
             // 
@@ -108,6 +109,16 @@ namespace RssReader {
             // cbRssUrl
             // 
             this.cbRssUrl.FormattingEnabled = true;
+            this.cbRssUrl.Items.AddRange(new object[] {
+            "主要",
+            "国内",
+            "国際",
+            "経済",
+            "エンタメ",
+            "スポーツ",
+            "IT",
+            "科学",
+            "地域"});
             this.cbRssUrl.Location = new System.Drawing.Point(202, 34);
             this.cbRssUrl.Name = "cbRssUrl";
             this.cbRssUrl.Size = new System.Drawing.Size(439, 20);
@@ -120,6 +131,7 @@ namespace RssReader {
             this.tbRssUrl.Name = "tbRssUrl";
             this.tbRssUrl.Size = new System.Drawing.Size(410, 19);
             this.tbRssUrl.TabIndex = 12;
+            this.tbRssUrl.TextChanged += new System.EventHandler(this.tbRssUrl_TextChanged);
             // 
             // Form1
             // 
