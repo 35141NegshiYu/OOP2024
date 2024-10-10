@@ -38,4 +38,20 @@ namespace DistanceConverter {
         protected override double Ratio { get { return 0.9144; } }
         public override string UnitName { get { return "ヤード"; } }
     }
+
+    public class MileConverter : ConverterBase {
+        public override bool IsMyUnit(string name) {
+            return name.ToLower() == "mile" || name == UnitName;
+        }
+        protected override double Ratio { get { return 1609.34; } }
+        public override string UnitName { get { return "マイル"; } }
+    }
+
+    public class KiloConverter : ConverterBase {
+        public override bool IsMyUnit(string name) {
+            return name.ToLower() == "kilo" || name == UnitName;
+        }
+        protected override double Ratio { get { return 1000; } }
+        public override string UnitName { get { return "キロ"; } }
+    }
 }

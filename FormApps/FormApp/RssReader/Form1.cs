@@ -86,6 +86,7 @@ namespace RssReader {
             cbRssUrl.Items.Add(displayName);
             urlMapping[displayName] = url;
         }
+
         private void Form1_Load(object sender, EventArgs e) {
             cbRssUrl.DropDownStyle = ComboBoxStyle.DropDown; // URLの入力を許可
         }
