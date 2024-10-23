@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace RssReader {
-    partial class Form1 {
+    partial class form1 {
         /// <summary>
         /// 必要なデザイナー変数です。
         /// </summary>
@@ -67,7 +67,7 @@ namespace RssReader {
             this.webView21.Size = new System.Drawing.Size(741, 377);
             this.webView21.TabIndex = 5;
             this.webView21.ZoomFactor = 1D;
-            this.webView21.Click += new System.EventHandler(this.trButton_Click);
+            this.webView21.Click += new System.EventHandler(this.bt_Favorite_Click);
             // 
             // label1
             // 
@@ -86,7 +86,7 @@ namespace RssReader {
             this.trButton.TabIndex = 8;
             this.trButton.Text = "登録";
             this.trButton.UseVisualStyleBackColor = true;
-            this.trButton.Click += new System.EventHandler(this.trButton_Click);
+            this.trButton.Click += new System.EventHandler(this.bt_Favorite_Click);
             // 
             // label2
             // 
@@ -123,7 +123,6 @@ namespace RssReader {
             this.cbRssUrl.Name = "cbRssUrl";
             this.cbRssUrl.Size = new System.Drawing.Size(439, 20);
             this.cbRssUrl.TabIndex = 11;
-            this.cbRssUrl.SelectedIndexChanged += new System.EventHandler(this.cbRssUrl_SelectedIndexChanged);
             // 
             // tbRssUrl
             // 
@@ -131,7 +130,6 @@ namespace RssReader {
             this.tbRssUrl.Name = "tbRssUrl";
             this.tbRssUrl.Size = new System.Drawing.Size(410, 19);
             this.tbRssUrl.TabIndex = 12;
-            this.tbRssUrl.TextChanged += new System.EventHandler(this.tbRssUrl_TextChanged);
             // 
             // Form1
             // 
@@ -151,14 +149,13 @@ namespace RssReader {
             this.ForeColor = System.Drawing.Color.Black;
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.webView21)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
-        
+
 
 
 
