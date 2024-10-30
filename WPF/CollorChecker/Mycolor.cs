@@ -18,12 +18,6 @@ namespace CollorChecker {
         public override string ToString() {
              return Name ?? string.Format("R:{0,3} G:{1,3} B:{2,3}", Color.R, Color.G, Color.B);
         }
-        public override bool Equals(object obj) {
-            return obj is MyColor other && Color.Equals(other.Color);
-        }
-
-        public override int GetHashCode() {
-            return Color.GetHashCode();
-        }
+        
     }
 }

@@ -93,13 +93,20 @@ namespace CollorChecker {
             var selectedItem = stockList.SelectedItem;
 
             if (selectedItem != null) {
-                stockList.Items.Remove(selectedItem);
+                var result = MessageBox.Show("選択した色を削除しますか？", "確認", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
-                //バックグラウンドの色を黒に戻す
-                colorArea.Background = new SolidColorBrush(Colors.Black);
+                if (result == MessageBoxResult.Yes) {
+                    stockList.Items.Remove(selectedItem);
 
-                // スライダーの値も初期化する場合はここに追加
-                setSliderValue(Color.FromArgb(255, 0, 0, 0));
+                    //バックグラウンドの色を黒に戻す
+                    colorArea.Background = new SolidColorBrush(Colors.Black);
+
+                    // スライダーの値も初期化する場合はここに追加
+                    setSliderValue(Color.FromArgb(255, 0, 0, 0));
+                }
+                
+            }else {
+                MessageBox.Show("削除する項目を選択してください。");
             }
             
         }
