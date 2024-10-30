@@ -67,7 +67,7 @@
             <Button x:Name="stockButton" Content="STOCK" Background="#FFE8AEAE" FontSize="16" Margin="10,20,53,0" Click="stockButton_Click"/>
 
             <ListBox x:Name="stockList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,10,0,10" HorizontalAlignment="Center" Width="214" Background="#FFFFE1E1" Grid.Row="1" SelectionChanged="stockList_SelectionChanged" FontFamily="BIZ UDGothic"/>
-            <Button Content="削除"   HorizontalAlignment="Left" Margin="185,20,0,0" Width="39" RenderTransformOrigin="0.422,1.165" Click="Button_Click"/>
+            <Button Content="削除"   HorizontalAlignment="Left" Margin="185,20,0,0" Width="39" RenderTransformOrigin="0.422,1.165" Click="Button_Click" Background="#FFFF7F7F"/>
 
 
 

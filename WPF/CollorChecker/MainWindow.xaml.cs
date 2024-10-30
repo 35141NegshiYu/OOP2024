@@ -44,17 +44,15 @@ namespace CollorChecker {
             Name = ""*/
 
             currentColor.Color = Color.FromRgb((byte)rSlider.Value, (byte)gSlider.Value, (byte)bSlider.Value);
-            currentColor.Name = null;
             colorArea.Background = new SolidColorBrush(currentColor.Color);
 
-            
-
         }
-
         private void stockButton_Click(object sender, RoutedEventArgs e) {
+            currentColor.Name = GetColorList().Where(c => c.Color==currentColor.Color).Select(c => c.Name).FirstOrDefault();
             //色の重複防止
             if (!stockList.Items.Contains((MyColor)currentColor)) {
                 stockList.Items.Insert(0, currentColor);
+                
 
             } else {
                 MessageBox.Show("既に登録済みです！");
@@ -62,14 +60,12 @@ namespace CollorChecker {
             colorSelectComboBox.SelectedIndex = -1;
         }
 
-
         private void stockList_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             if (stockList.SelectedIndex != -1) {
                 colorArea.Background = new SolidColorBrush(((MyColor)stockList.Items[stockList.SelectedIndex]).Color);
             //各スライダーの値を設定する    
             setSliderValue(((MyColor)stockList.Items[stockList.SelectedIndex]).Color);
             }
-
         }
 
         private void setSliderValue(Color color) {
@@ -85,8 +81,6 @@ namespace CollorChecker {
 
                 currentColor.Name = tempCurrentColor.Name;
             }
-            
-            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e) {
@@ -104,11 +98,9 @@ namespace CollorChecker {
                     // スライダーの値も初期化する場合はここに追加
                     setSliderValue(Color.FromArgb(255, 0, 0, 0));
                 }
-                
             }else {
                 MessageBox.Show("削除する項目を選択してください。");
             }
-            
         }
     }
         /// <summary>
