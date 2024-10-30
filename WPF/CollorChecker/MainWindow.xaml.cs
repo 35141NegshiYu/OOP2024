@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -26,6 +27,7 @@ namespace CollorChecker {
             //αチャンネルの初期値を設定(起動時すぐにストックボタンが押された場合の対応)
             currentColor.Color = Color.FromArgb(255, 0, 0, 0);
 
+            //ほかの初期化処理
             DataContext = GetColorList();
         }
         /// <summary>
@@ -38,81 +40,77 @@ namespace CollorChecker {
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
-            currentColor = new MyColor {
+            /*Color = Color.FromRgb((byte)rSlider.Value, (byte)gSlider.Value, (byte)bSlider.Value),
+            Name = ""*/
 
-                Color = Color.FromRgb((byte)rSlider.Value, (byte)gSlider.Value, (byte)bSlider.Value),
-                Name = ""
-            };
-
+            currentColor.Color = Color.FromRgb((byte)rSlider.Value, (byte)gSlider.Value, (byte)bSlider.Value);
+            currentColor.Name = null;
             colorArea.Background = new SolidColorBrush(currentColor.Color);
 
-            int rvalue = (int)rSlider.Value;
-            int gvalue = (int)gSlider.Value;
-            int bvalue = (int)bSlider.Value;
-
-            rValue.Text = rvalue.ToString();
-            gValue.Text = gvalue.ToString();
-            bValue.Text = bvalue.ToString();
-
-
+            
 
         }
 
         private void stockButton_Click(object sender, RoutedEventArgs e) {
             //色の重複防止
-            if (stockList.Items.OfType<MyColor>().Any(c => c.Color == currentColor.Color)) {
-                return;
-            }
+            if (!stockList.Items.Contains((MyColor)currentColor)) {
+                stockList.Items.Insert(0, currentColor);
 
-            stockList.Items.Insert(0, currentColor);
+            } else {
+                MessageBox.Show("既に登録済みです！");
+            }
+            colorSelectComboBox.SelectedIndex = -1;
         }
 
 
         private void stockList_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            if (stockList.SelectedItem is MyColor selectedColor) {
-                // 選択されたMyColorから色を取得
-                colorArea.Background = new SolidColorBrush(selectedColor.Color);
-
-                //スライダーの更新
-                rSlider.Value = selectedColor.Color.R;
-                gSlider.Value = selectedColor.Color.G;
-                bSlider.Value = selectedColor.Color.B;
-
-                //テキストボックスの値も更新
-                rValue.Text = selectedColor.Color.R.ToString();
-                gValue.Text = selectedColor.Color.G.ToString();
-                bValue.Text = selectedColor.Color.B.ToString();
+            if (stockList.SelectedIndex != -1) {
+                colorArea.Background = new SolidColorBrush(((MyColor)stockList.Items[stockList.SelectedIndex]).Color);
+            //各スライダーの値を設定する    
+            setSliderValue(((MyColor)stockList.Items[stockList.SelectedIndex]).Color);
             }
+
+        }
+
+        private void setSliderValue(Color color) {
+            rSlider.Value = color.R;
+            gSlider.Value = color.G;
+            bSlider.Value = color.B;
         }
 
         private void colorSelectComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            if (colorSelectComboBox.SelectedItem is MyColor selectedColor) {
-                //選択された色を設定
-                colorArea.Background = new SolidColorBrush(selectedColor.Color);
+            if (colorSelectComboBox.SelectedIndex != -1) {
+                var tempCurrentColor = currentColor = (MyColor)((ComboBox)sender).SelectedItem;
+                setSliderValue(currentColor.Color);
 
-                //スライダーの更新
-                rSlider.Value = selectedColor.Color.R;
-                gSlider.Value = selectedColor.Color.G;
-                bSlider.Value = selectedColor.Color.B;
-
-                //テキストボックスの値も更新
-                rValue.Text = selectedColor.Color.R.ToString();
-                gValue.Text = selectedColor.Color.G.ToString();
-                bValue.Text = selectedColor.Color.B.ToString();
-
-                var mycolor = (MyColor)((ComboBox)sender).SelectedItem;
-                var color = mycolor.Color;
-                var name = mycolor.Name;
-
+                currentColor.Name = tempCurrentColor.Name;
             }
+            
+            
         }
-        /// <summary>
-        /// 色と色名を保持するクラス
-        /// </summary>
-        public class MyColor {
-            public Color Color { get; set; }
-            public string Name { get; set; }
+
+        private void Button_Click(object sender, RoutedEventArgs e) {
+            var selectedItem = stockList.SelectedItem;
+
+            if (selectedItem != null) {
+                stockList.Items.Remove(selectedItem);
+
+                //バックグラウンドの色を黒に戻す
+                colorArea.Background = new SolidColorBrush(Colors.Black);
+
+                // スライダーの値も初期化する場合はここに追加
+                setSliderValue(Color.FromArgb(255, 0, 0, 0));
+            }
             
         }
     }
+        /// <summary>
+        /// 色と色名を保持するクラス
+        /// </summary>
+        /*public class MyColor {
+            public Color Color { get; set; }
+            public string Name { get; set; }
+            
+        }*/
+    
 }
