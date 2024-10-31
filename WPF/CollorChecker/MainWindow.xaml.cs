@@ -21,14 +21,16 @@ namespace CollorChecker {
     /// MainWindow.xaml の相互作用ロジック
     /// </summary>
     public partial class MainWindow : Window {
-        MyColor currentColor = new MyColor();   //現在設定してる色情報
+        MyColor currentColor;   //現在設定してる色情報
+        MyColor[] colorsTable;  //色のデータ
+
         public MainWindow() {
             InitializeComponent();
             //αチャンネルの初期値を設定(起動時すぐにストックボタンが押された場合の対応)
             currentColor.Color = Color.FromArgb(255, 0, 0, 0);
 
             //ほかの初期化処理
-            DataContext = GetColorList();
+            DataContext = colorsTable = GetColorList();
         }
         /// <summary>
         /// すべての色を取得するメソッド
@@ -40,15 +42,21 @@ namespace CollorChecker {
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e) {
-            /*Color = Color.FromRgb((byte)rSlider.Value, (byte)gSlider.Value, (byte)bSlider.Value),
-            Name = ""*/
-
             currentColor.Color = Color.FromRgb((byte)rSlider.Value, (byte)gSlider.Value, (byte)bSlider.Value);
-            colorArea.Background = new SolidColorBrush(currentColor.Color);
+            //currentColor.Name = GetColorList().Where(c =>c.Color.Equals(currentColor.Color)).Select(x => x.Name).FirstOrDefault();
 
+            int i;
+            for (i = 0; i < colorsTable.Length; i++) {
+                if (colorsTable[i].Color.Equals(currentColor.Color)) {
+                    currentColor.Name = colorsTable[i].Name;
+                    break;
+                }
+            }
+            colorSelectComboBox.SelectedIndex = i;
+            colorArea.Background = new SolidColorBrush(currentColor.Color);
         }
         private void stockButton_Click(object sender, RoutedEventArgs e) {
-            currentColor.Name = GetColorList().Where(c => c.Color==currentColor.Color).Select(c => c.Name).FirstOrDefault();
+            //currentColor.Name = GetColorList().Where(c => c.Color==currentColor.Color).Select(c => c.Name).FirstOrDefault();
             //色の重複防止
             if (!stockList.Items.Contains((MyColor)currentColor)) {
                 stockList.Items.Insert(0, currentColor);
