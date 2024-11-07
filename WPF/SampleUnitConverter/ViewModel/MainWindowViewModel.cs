@@ -29,7 +29,7 @@ namespace SampleUnitConverter {
         public double ImperialValue {
             get { return imperialValue; }
             set {
-                ImperialValue = value;
+                imperialValue = value;
                 OnPropertyChanged();    //値が変更されたら通知
             }
         }
