@@ -22,7 +22,7 @@ namespace CustomerApp.Objects {
         /// </summary>
         public string Address { get; set; }
         public override string ToString() {
-            return $"{Id}:{Name}:{Phone}";
+            return $"{Id}:{Name}:{Phone}:{Address}";
         }
     }
 }
