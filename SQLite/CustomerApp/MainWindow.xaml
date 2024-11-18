@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:CustomerApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="300">
+    
     <Grid>
         <StackPanel Margin="10">
             <Grid>
@@ -25,10 +26,10 @@
                 <TextBlock Text="住所" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
                 <TextBox x:Name="AddressTextBox" Grid.Row="2" Grid.Column="1"/>
             </Grid>
-            <!-- 更新ボタン -->
-            <Button Content="Update" x:Name="UpdateButton" Click="UpdateButton_Click" Margin="2"/>
+            
             <Button Content="Save" x:Name="SaveButton" Click="SaveButton_Click" Margin="2"/>
             <Button Content="Delete" x:Name="DeleteButton" Click="DeleteButton_Click" Margin="2"/>
+            <Button Content="Update" x:Name="UpdateButton" Click="UpdateButton_Click" Margin="2"/>
 
             <TextBox x:Name="SearchTextBox" FontSize="20" TextChanged="SearchTextBox_TextChanged"/>
 
@@ -40,6 +41,7 @@
                             <TextBlock Text="{Binding Name}" FontSize="20"/>
                             <TextBlock Text="{Binding Phone}" Foreground="Blue"/>
                             <TextBlock Text="{Binding Address}" Foreground="Green"/>
+
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

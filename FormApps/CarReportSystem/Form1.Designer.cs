@@ -279,6 +279,7 @@
             pbPicture.SizeMode = PictureBoxSizeMode.Zoom;
             pbPicture.TabIndex = 6;
             pbPicture.TabStop = false;
+            pbPicture.Click += pbPicture_Click;
             // 
             // btAddReport
             // 
@@ -442,7 +443,7 @@
             // このアプリについてToolStripMenuItem
             // 
             このアプリについてToolStripMenuItem.Name = "このアプリについてToolStripMenuItem";
-            このアプリについてToolStripMenuItem.Size = new Size(180, 22);
+            このアプリについてToolStripMenuItem.Size = new Size(164, 22);
             このアプリについてToolStripMenuItem.Text = "このアプリについて...";
             このアプリについてToolStripMenuItem.Click += このアプリについてToolStripMenuItem_Click;
             // 

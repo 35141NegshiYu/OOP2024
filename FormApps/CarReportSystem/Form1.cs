@@ -327,5 +327,9 @@ namespace CarReportSystem {
             var fmvarsion = new fmVersion();
             fmvarsion.ShowDialog();
         }
+
+        private void pbPicture_Click(object sender, EventArgs e) {
+
+        }
     }
 }
