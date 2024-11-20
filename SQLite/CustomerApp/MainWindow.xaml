@@ -34,7 +34,7 @@
 
                 <!-- 画像選択ボタン -->
                 <Button Content="画像選択" x:Name="SelectImageButton" Grid.Row="3" Grid.Column="1" 
-                        Click="SelectImageButton_Click" HorizontalAlignment="Left" Width="217" />
+                        Click="SelectImageButton_Click" HorizontalAlignment="Left" Width="217" Height="20" VerticalAlignment="Bottom" />
 
                 <!-- 画像削除ボタン -->
                 <Button Grid.Row="3" Grid.Column="1" Content="画像削除" x:Name="DeleteImageButton" 
@@ -47,21 +47,27 @@
             <Button Content="Delete" x:Name="DeleteButton" Click="DeleteButton_Click" Margin="2"/>
             <Button Content="Update" x:Name="UpdateButton" Click="UpdateButton_Click" Margin="2"/>
 
-            <!-- 画像表示 -->
-            <Image x:Name="CustomerImage" Height="200" Width="200" Margin="10"/>
+            <Image x:Name="CustomerImage" Height="250" Width="250" Margin="10"/>
 
-            <!-- 顧客リスト表示 -->
             <TextBox x:Name="SearchTextBox" FontSize="20" TextChanged="SearchTextBox_TextChanged"/>
             <ListView x:Name="CustomerListView" Margin="0,5,0,0" Height="360" SelectionChanged="CustomerListView_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Id}"/>
-                            <TextBlock Text="{Binding Name}" FontSize="20"/>
-                            <TextBlock Text="{Binding Phone}" Foreground="Blue"/>
-                            <TextBlock Text="{Binding Address}" Foreground="Green"/>
-                            <Image Source="{Binding ImagePath}" Height="50" Width="50"/>
-                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="8*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Width="200" Grid.Column="0" Margin="5">
+                                <TextBlock Text="{Binding Id}"/>
+                                <TextBlock Text="{Binding Name}" FontSize="20"/>
+                                <TextBlock Text="{Binding Phone}" Foreground="Blue"/>
+                                <TextBlock Text="{Binding Address}" Foreground="Green"/>
+                            </StackPanel>
+
+                            <Image Grid.Column="1" Source="{Binding ImagePath}" Height="100" Width="100" Margin="10" VerticalAlignment="Center"/>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

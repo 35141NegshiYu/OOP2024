@@ -1,7 +1,6 @@
 ﻿using System.Windows.Controls;
 using Microsoft.Win32;
 using SQLite;
-using System.IO;
 using CustomerApp.Objects;
 using System.Collections.Generic;
 using System.Windows.Media.Imaging;
@@ -31,6 +30,7 @@ namespace CustomerApp {
                 connection.CreateTable<Customer>();
                 connection.Insert(customer);
             }
+            CustomerImage.Source = null;
             ReadDatabase();  // 新しい顧客を追加した後、リストを更新
         }
 
@@ -60,7 +60,6 @@ namespace CustomerApp {
             PhoneTextBox.Clear();
             AddressTextBox.Clear();
             CustomerImage.Source = null;
-
         }
 
         // Updateボタンをクリックしたとき
@@ -74,7 +73,13 @@ namespace CustomerApp {
             selectedCustomer.Name = NameTextBox.Text;
             selectedCustomer.Phone = PhoneTextBox.Text;
             selectedCustomer.Address = AddressTextBox.Text;
-            selectedCustomer.ImagePath = CustomerImage.Source != null ? (CustomerImage.Source as BitmapImage)?.UriSource.AbsolutePath : selectedCustomer.ImagePath;
+
+            // 画像がUIで変更されている場合、画像パスも更新
+            if (CustomerImage.Source == null) {
+                selectedCustomer.ImagePath = null; // 画像が削除された場合
+            } else {
+                selectedCustomer.ImagePath = (CustomerImage.Source as BitmapImage)?.UriSource.AbsolutePath;
+            }
 
             using (var connection = new SQLiteConnection(App.databasePass)) {
                 connection.CreateTable<Customer>();
@@ -115,6 +120,8 @@ namespace CustomerApp {
                 }
             }
         }
+
+        // 画像削除ボタンをクリックしたとき
         private void DeleteImageButton_Click(object sender, RoutedEventArgs e) {
             var selectedCustomer = CustomerListView.SelectedItem as Customer;
 
@@ -123,17 +130,8 @@ namespace CustomerApp {
                 return;
             }
 
-            // 顧客の画像パスを削除
-            selectedCustomer.ImagePath = null;
-
-            // データベースの顧客情報を更新
-            using (var connection = new SQLiteConnection(App.databasePass)) {
-                connection.CreateTable<Customer>();
-                connection.Update(selectedCustomer); 
-            }
+            // 顧客の画像をUIから削除
             CustomerImage.Source = null;
-            ReadDatabase();
         }
-
     }
 }
