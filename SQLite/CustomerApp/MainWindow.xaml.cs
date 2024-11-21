@@ -1,16 +1,18 @@
-﻿using System.Windows.Controls;
+﻿using CustomerApp.Objects;
 using Microsoft.Win32;
 using SQLite;
-using CustomerApp.Objects;
-using System.Collections.Generic;
-using System.Windows.Media.Imaging;
-using System.Windows;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace CustomerApp {
     public partial class MainWindow : Window {
         List<Customer> _customers;
+        string _lastSearchText = ""; // 検索ボックスの内容を保持するための変数
 
         public MainWindow() {
             InitializeComponent();
@@ -24,22 +26,32 @@ namespace CustomerApp {
                 string.IsNullOrEmpty(AddressTextBox.Text)) {
 
                 MessageBox.Show("名前、電話番号、住所のいずれかが必須です。少なくとも1つの項目に入力してください。", "入力エラー", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;  
+                return;
+            }
+            byte[] imageData = null;
+            if (CustomerImage.Source != null) {
+                BitmapImage bitmapImage = CustomerImage.Source as BitmapImage;
+                if (bitmapImage != null) {
+                    imageData = ConvertImageToBytes(bitmapImage); // 画像をバイト配列に変換
+                }
             }
 
             var customer = new Customer() {
                 Name = string.IsNullOrEmpty(NameTextBox.Text) ? "未登録" : NameTextBox.Text,
                 Phone = string.IsNullOrEmpty(PhoneTextBox.Text) ? "未登録" : PhoneTextBox.Text,
                 Address = string.IsNullOrEmpty(AddressTextBox.Text) ? "未登録" : AddressTextBox.Text,
-                ImagePath = CustomerImage.Source != null ? (CustomerImage.Source as BitmapImage)?.UriSource.AbsolutePath : null  // 画像のパスを保存
+                ImageData = imageData
+
             };
 
             using (var connection = new SQLiteConnection(App.databasePass)) {
                 connection.CreateTable<Customer>();
                 connection.Insert(customer);
             }
+
             CustomerImage.Source = null;
             ReadDatabase();  // 新しい顧客を追加した後、リストを更新
+            ApplySearch();  // 検索を再適用
         }
 
         // 画像選択ボタンをクリックしたとき
@@ -49,7 +61,10 @@ namespace CustomerApp {
 
             if (openFileDialog.ShowDialog() == true) {
                 string filePath = openFileDialog.FileName;
-                CustomerImage.Source = new BitmapImage(new Uri(filePath));  // 画像を表示
+                BitmapImage bitmap = new BitmapImage(new Uri(filePath));
+
+                // 画像をUIに表示
+                CustomerImage.Source = bitmap;
             }
         }
 
@@ -68,6 +83,7 @@ namespace CustomerApp {
             PhoneTextBox.Clear();
             AddressTextBox.Clear();
             CustomerImage.Source = null;
+            ApplySearch();  // 検索を再適用
         }
 
         // Updateボタンをクリックしたとき
@@ -82,11 +98,11 @@ namespace CustomerApp {
             selectedCustomer.Phone = PhoneTextBox.Text;
             selectedCustomer.Address = AddressTextBox.Text;
 
-            // 画像がUIで変更されている場合、画像パスも更新
+            // 画像がUIで変更されている場合、画像データも更新
             if (CustomerImage.Source == null) {
-                selectedCustomer.ImagePath = null; // 画像が削除された場合
+                selectedCustomer.ImageData = null; // 画像が削除された場合
             } else {
-                selectedCustomer.ImagePath = (CustomerImage.Source as BitmapImage)?.UriSource.AbsolutePath;
+                selectedCustomer.ImageData = ConvertImageToBytes(CustomerImage.Source as BitmapImage);
             }
 
             using (var connection = new SQLiteConnection(App.databasePass)) {
@@ -95,6 +111,7 @@ namespace CustomerApp {
             }
 
             ReadDatabase();  // 更新後にリストを再表示
+            ApplySearch();  // 検索を再適用
         }
 
         // 顧客リストをデータベースから読み込む
@@ -108,15 +125,8 @@ namespace CustomerApp {
 
         // 検索ボックスに入力があった場合、顧客リストをフィルタリング
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e) {
-            string searchText = SearchTextBox.Text.ToLower();  // 小文字に変換して、大小文字を区別しない
-
-            var filterList = _customers.Where(x =>
-                x.Name.ToLower().Contains(searchText) ||   
-                x.Phone.ToLower().Contains(searchText) ||  
-                x.Address.ToLower().Contains(searchText)   
-            ).ToList();
-
-            CustomerListView.ItemsSource = filterList;
+            _lastSearchText = SearchTextBox.Text.ToLower();  // 検索テキストを保持
+            ApplySearch();
         }
 
         // 顧客リストの選択が変更されたとき
@@ -127,9 +137,16 @@ namespace CustomerApp {
                 PhoneTextBox.Text = selectedCustomer.Phone;
                 AddressTextBox.Text = selectedCustomer.Address;
 
-                // 画像表示
-                if (!string.IsNullOrEmpty(selectedCustomer.ImagePath)) {
-                    CustomerImage.Source = new BitmapImage(new Uri(selectedCustomer.ImagePath));
+
+                if (selectedCustomer.ImageData != null) {
+                    using (var stream = new System.IO.MemoryStream(selectedCustomer.ImageData)) {
+                        var bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.StreamSource = stream;
+                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmap.EndInit();
+                        CustomerImage.Source = bitmap;
+                    }
                 } else {
                     CustomerImage.Source = null;
                 }
@@ -147,6 +164,54 @@ namespace CustomerApp {
 
             // 顧客の画像をUIから削除
             CustomerImage.Source = null;
+
+            // 画像データをデータベースから削除
+            if (selectedCustomer.ImageData != null) {
+                using (var connection = new SQLiteConnection(App.databasePass)) {
+                    connection.CreateTable<Customer>();
+                    selectedCustomer.ImageData = null;  // 画像データをnullに設定
+                    connection.Update(selectedCustomer);
+                }
+            }
+        }
+
+        // 検索条件を適用
+        private void ApplySearch() {
+            if (string.IsNullOrEmpty(_lastSearchText)) {
+                CustomerListView.ItemsSource = _customers;
+            } else {
+                var filterList = _customers.Where(x =>
+                    x.Name.ToLower().Contains(_lastSearchText) ||
+                    x.Phone.ToLower().Contains(_lastSearchText) ||
+                    x.Address.ToLower().Contains(_lastSearchText)
+                ).ToList();
+                CustomerListView.ItemsSource = filterList;
+            }
+        }
+
+        // 画像をバイト配列に変換するメソッド
+        private byte[] ConvertImageToBytes(BitmapImage bitmapImage) {
+            using (MemoryStream ms = new MemoryStream()) {
+                // JpegBitmapEncoderを使用して画像をメモリストリームに保存
+                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
+                encoder.Save(ms); // 画像をバイト配列に変換
+                return ms.ToArray(); // バイト配列として返す
+            }
+        }
+
+        // バイト配列を画像に変換するメソッド
+        private BitmapImage ConvertBytesToImage(byte[] byteArray) {
+            if (byteArray == null || byteArray.Length == 0)
+                return null;
+
+            using (MemoryStream ms = new MemoryStream(byteArray)) {
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = ms;  // メモリストリームから画像を読み込む
+                bitmapImage.EndInit();
+                return bitmapImage; // 変換したBitmapImageを返す
+            }
         }
     }
 }
