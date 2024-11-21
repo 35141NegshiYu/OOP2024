@@ -43,9 +43,9 @@
             </Grid>
 
             <!-- 保存・削除・更新ボタン -->
-            <Button Content="Save" x:Name="SaveButton" Click="SaveButton_Click" Margin="2"/>
-            <Button Content="Delete" x:Name="DeleteButton" Click="DeleteButton_Click" Margin="2"/>
-            <Button Content="Update" x:Name="UpdateButton" Click="UpdateButton_Click" Margin="2"/>
+            <Button Content="登録" x:Name="SaveButton" Click="SaveButton_Click" Margin="2"/>
+            <Button Content="削除" x:Name="DeleteButton" Click="DeleteButton_Click" Margin="2"/>
+            <Button Content="更新" x:Name="UpdateButton" Click="UpdateButton_Click" Margin="2"/>
 
             <Image x:Name="CustomerImage" Height="250" Width="250" Margin="10"/>
 

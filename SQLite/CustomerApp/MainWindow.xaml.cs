@@ -19,10 +19,18 @@ namespace CustomerApp {
 
         // Saveボタンをクリックしたとき
         private void SaveButton_Click(object sender, RoutedEventArgs e) {
+            if (string.IsNullOrEmpty(NameTextBox.Text) &&
+                string.IsNullOrEmpty(PhoneTextBox.Text) &&
+                string.IsNullOrEmpty(AddressTextBox.Text)) {
+
+                MessageBox.Show("名前、電話番号、住所のいずれかが必須です。少なくとも1つの項目に入力してください。", "入力エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;  
+            }
+
             var customer = new Customer() {
-                Name = NameTextBox.Text,
-                Phone = PhoneTextBox.Text,
-                Address = AddressTextBox.Text,
+                Name = string.IsNullOrEmpty(NameTextBox.Text) ? "未登録" : NameTextBox.Text,
+                Phone = string.IsNullOrEmpty(PhoneTextBox.Text) ? "未登録" : PhoneTextBox.Text,
+                Address = string.IsNullOrEmpty(AddressTextBox.Text) ? "未登録" : AddressTextBox.Text,
                 ImagePath = CustomerImage.Source != null ? (CustomerImage.Source as BitmapImage)?.UriSource.AbsolutePath : null  // 画像のパスを保存
             };
 
