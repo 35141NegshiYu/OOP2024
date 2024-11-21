@@ -100,7 +100,14 @@ namespace CustomerApp {
 
         // 検索ボックスに入力があった場合、顧客リストをフィルタリング
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e) {
-            var filterList = _customers.Where(x => x.Name.Contains(SearchTextBox.Text)).ToList();
+            string searchText = SearchTextBox.Text.ToLower();  // 小文字に変換して、大小文字を区別しない
+
+            var filterList = _customers.Where(x =>
+                x.Name.ToLower().Contains(searchText) ||   
+                x.Phone.ToLower().Contains(searchText) ||  
+                x.Address.ToLower().Contains(searchText)   
+            ).ToList();
+
             CustomerListView.ItemsSource = filterList;
         }
 
