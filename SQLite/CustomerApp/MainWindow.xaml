@@ -20,40 +20,47 @@
 
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="39*"/>
+                    <RowDefinition Height="33*"/>
+                    <RowDefinition Height="52*"/>
+                    <RowDefinition Height="26*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="8*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="名前" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Margin="10,0,0,0"/>
-                <TextBox x:Name="NameTextBox" Grid.Row="0" Grid.ColumnSpan="2" Margin="52,0,0,18"/>
+                <!-- 名前のラベルとテキストボックス -->
+                <TextBlock Text="名前" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" Margin="10,0,0,0" FontSize="16" Height="21"/>
+                <TextBox x:Name="NameTextBox" Grid.Row="0" Grid.ColumnSpan="2" Margin="81,0,0,18" FontSize="14"/>
 
-                <TextBlock Text="電話番号" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Margin="0,0,10,0"/>
-                <TextBox x:Name="PhoneTextBox" Grid.Row="1" Grid.ColumnSpan="2" Margin="52,0,0,18"/>
+                <!-- 電話番号のラベルとテキストボックス -->
+                <TextBlock Text="電話番号" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Margin="0,0,10,0" FontSize="16" Height="21"/>
+                <TextBox x:Name="PhoneTextBox" Grid.Row="1" Grid.ColumnSpan="2" Margin="81,0,0,23" FontSize="14"/>
 
-                <TextBlock Text="住所" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Margin="10,1,0,0"/>
-                <TextBox x:Name="AddressTextBox" Grid.Row="2" Grid.ColumnSpan="2" Margin="52,0,0,20"/>
+                <!-- 住所のラベルとテキストボックス -->
+                <TextBlock Text="住所" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Margin="10,39,0,0" FontSize="16" Height="21" Grid.RowSpan="2"/>
+                <TextBox x:Name="AddressTextBox" Grid.Row="1" Grid.ColumnSpan="2" Margin="81,38,0,10" FontSize="14" Grid.RowSpan="2"/>
 
-                <TextBlock Text="画像" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                <Grid Grid.Row="3" Grid.ColumnSpan="2" Margin="52,0,0,0">
+                <!-- 画像のラベル -->
+                <TextBlock Text="画像" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="16" Height="21"/>
+                <Grid Grid.Row="2" Grid.ColumnSpan="2" Margin="52,30,0,0" Grid.RowSpan="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
+                    <!-- 画像選択ボタン -->
                     <Button Content="画像選択" x:Name="SelectImageButton" Grid.Column="0" 
                             Click="SelectImageButton_Click" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                            Background="LightSkyBlue" Foreground="White" FontWeight="Bold"/>
+                            Background="LightSkyBlue" Foreground="White" FontWeight="Bold" FontSize="14"/>
+                    <!-- 画像削除ボタン -->
                     <Button Content="画像削除" x:Name="DeleteImageButton" Grid.Column="1" 
                             HorizontalAlignment="Center" VerticalAlignment="Center" 
-                            Click="DeleteImageButton_Click" Background="LightPink" Foreground="White" FontWeight="Bold"/>
+                            Click="DeleteImageButton_Click" Background="LightPink" Foreground="White" FontWeight="Bold" FontSize="14"/>
                 </Grid>
             </Grid>
 
+            <!-- 登録、削除、更新ボタン -->
             <Button Content="登録" x:Name="SaveButton" Click="SaveButton_Click" Margin="2" Foreground="White" FontSize="16" Background="RoyalBlue" FontWeight="Bold"/>
             <Button Content="削除" x:Name="DeleteButton" Click="DeleteButton_Click" Margin="2" Foreground="White" FontSize="16" Background="Tomato" FontWeight="Bold"/>
             <Button Content="更新" x:Name="UpdateButton" Click="UpdateButton_Click" Margin="2" Foreground="White" FontSize="16" Background="MediumSeaGreen" FontWeight="Bold"/>
@@ -62,8 +69,10 @@
                 <Image x:Name="CustomerImage" Height="163" Width="185" Margin="10"/>
             </Border>
 
+            <!-- 検索テキストボックス -->
             <TextBox x:Name="SearchTextBox" FontSize="20" TextChanged="SearchTextBox_TextChanged" Margin="5" Padding="10" Background="LightYellow"/>
 
+            <!-- 顧客リストビュー -->
             <ListView x:Name="CustomerListView" Margin="0,5,0,0" Height="360" SelectionChanged="CustomerListView_SelectionChanged" BorderBrush="LightGray" BorderThickness="1">
                 <ListView.View>
                     <GridView>
