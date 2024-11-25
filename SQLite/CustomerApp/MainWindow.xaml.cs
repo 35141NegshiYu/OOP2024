@@ -21,13 +21,17 @@ namespace CustomerApp {
 
         // Saveボタンをクリックしたとき
         private void SaveButton_Click(object sender, RoutedEventArgs e) {
-            if (string.IsNullOrEmpty(NameTextBox.Text) &&
-                string.IsNullOrEmpty(PhoneTextBox.Text) &&
-                string.IsNullOrEmpty(AddressTextBox.Text)) {
-
-                MessageBox.Show("名前、電話番号、住所のいずれかが必須です。少なくとも1つの項目に入力してください。", "入力エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+            // 名前が未入力の場合は登録できないようにする
+            if (string.IsNullOrEmpty(NameTextBox.Text)) {
+                MessageBox.Show("名前は必須です。", "入力エラー", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+
+            // 他のフィールドが未入力の場合でも、未登録と表示する
+            string name = string.IsNullOrEmpty(NameTextBox.Text) ? "未登録" : NameTextBox.Text;
+            string phone = string.IsNullOrEmpty(PhoneTextBox.Text) ? "未登録" : PhoneTextBox.Text;
+            string address = string.IsNullOrEmpty(AddressTextBox.Text) ? "未登録" : AddressTextBox.Text;
+
             byte[] imageData = null;
             if (CustomerImage.Source != null) {
                 BitmapImage bitmapImage = CustomerImage.Source as BitmapImage;
@@ -37,11 +41,10 @@ namespace CustomerApp {
             }
 
             var customer = new Customer() {
-                Name = string.IsNullOrEmpty(NameTextBox.Text) ? "未登録" : NameTextBox.Text,
-                Phone = string.IsNullOrEmpty(PhoneTextBox.Text) ? "未登録" : PhoneTextBox.Text,
-                Address = string.IsNullOrEmpty(AddressTextBox.Text) ? "未登録" : AddressTextBox.Text,
+                Name = name,
+                Phone = phone,
+                Address = address,
                 ImageData = imageData
-
             };
 
             using (var connection = new SQLiteConnection(App.databasePass)) {
@@ -94,9 +97,10 @@ namespace CustomerApp {
                 return;
             }
 
-            selectedCustomer.Name = NameTextBox.Text;
-            selectedCustomer.Phone = PhoneTextBox.Text;
-            selectedCustomer.Address = AddressTextBox.Text;
+            // 各フィールドが空であれば「未登録」と設定
+            selectedCustomer.Name = string.IsNullOrEmpty(NameTextBox.Text) ? "未登録" : NameTextBox.Text;
+            selectedCustomer.Phone = string.IsNullOrEmpty(PhoneTextBox.Text) ? "未登録" : PhoneTextBox.Text;
+            selectedCustomer.Address = string.IsNullOrEmpty(AddressTextBox.Text) ? "未登録" : AddressTextBox.Text;
 
             // 画像がUIで変更されている場合、画像データも更新
             if (CustomerImage.Source == null) {
